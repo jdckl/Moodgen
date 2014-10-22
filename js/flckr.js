@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $("#btn").click(function (event) {
 
+    	$('#content').empty();
+
         var searchTerm = $("#sbx").val();
         var Flickurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
         var tags = "&tags=" + searchTerm;
@@ -16,16 +18,11 @@ $(document).ready(function () {
              $('#content').append('<img src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic"/>');
              });
 
-             $("#loading").fadeIn('slow').delay( 6000 ).fadeOut('slow');
+             $("#loading").fadeIn('slow').delay( 4000 ).fadeOut('slow');
 
-             setTimeout(function() {
-        var $container = $('#content');
-			$container.isotope({
-  			itemSelector: '.pic',
-  			layoutMode: 'masonry',
-  			containerStyle: null
-		});
-		}, 6000);
+             $(".pic").click(function(){
+    			$(this).toggleClass("selected");
+			});
 
           });
     });
