@@ -16,6 +16,7 @@ $(document).ready(function () {
              $('#content').append('<img src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic"/>');
              });
 
+             $("#loading").fadeIn('slow').delay( 6000 ).fadeOut('slow');
 
              setTimeout(function() {
         var $container = $('#content');
