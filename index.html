@@ -6,19 +6,23 @@
 <link rel="stylesheet" href="css/style.css">
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="http://masonry.desandro.com/masonry.pkgd.min.js"></script>
 <script src="js/flckr.js"></script>
-<!--[if lt IE 9]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+<script src="http://masonry.desandro.com/masonry.pkgd.min.js"></script>
+<script type="text/javascript">
+var container = document.querySelector('#container');
+var msnry = new Masonry( container, {
+  // options
+  columnWidth: 250,
+  itemSelector: '.pic'
+});
+</script>
 </head>
 <body>
-<div id="header"></div>
-<div id="search">
-	<form id="srch">
-		<input type="text" placeholder="No filthy keywords pls." id="searchbx"/>
-			<a href="" type="submit" id="btn"><i class="fa fa-search"></i></a>
-	</form>
+<div id="header">
+<div id="form">
+<input type="text" id="sbx" placeholder="No filthy keywords pls">
+<button id="btn">Slurp</button>
+</div>
 </div>
 <div id="content">
 
