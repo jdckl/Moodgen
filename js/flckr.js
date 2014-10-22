@@ -15,7 +15,7 @@ $(document).ready(function () {
              console.log(photo);
                                    
              $.each(photo, function(i, item) {
-             $('#content').append('<img src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic"/>');
+             $('#content').append('<div id="ptrn"><img src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic"></img></div>');
              });
 
              $("#loading").fadeIn('slow').delay( 4000 ).fadeOut('slow');

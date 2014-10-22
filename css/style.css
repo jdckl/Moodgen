@@ -132,6 +132,7 @@ button{
 #content img{
 	width: 100%;
 	margin-bottom: 5px;
+	z-index: 1;
 	-webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     -ms-column-break-inside: avoid;
@@ -139,11 +140,13 @@ button{
 }
 
 .selected{
-	-webkit-box-shadow:0 0 50px #1abc9c; 
-	-moz-box-shadow: 0 0 50px #1abc9c; 
-	box-shadow:0 0 50px #1abc9c;
-	margin: -4;
-	z-index: 5;
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+}
+
+#ptrn{
+	background: url('img/bg.png') center no-repeat;
+	height: auto;
 }
 
 #loading{
