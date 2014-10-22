@@ -12,7 +12,11 @@ a{
 }
 
 #header{
-	width: 100%;
+	width: 60%;
+	left: 50%;
+	margin-left: -30%;
+	top: 2%;
+	border-radius: 6px;
 	height: 80px;
 	background-color: #34495e;
 	position: fixed;
@@ -22,8 +26,21 @@ a{
 
 #form{
 	width: 490px;
-	margin: 0 auto;
+	float: right;
 	margin-top: 15px;
+}
+
+h2{
+	float: left;
+	color: #ecf0f1;
+	font-family: Avenir;
+	font-weight: 500;
+	font-size: 32px;
+	margin: 0px;
+	margin-left: 20px;
+	position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #sbx{
@@ -42,7 +59,7 @@ a{
 #btn{
 	border: 1px #bdc3c7 solid;
 	border-radius: 4px;
-	background-color: #ecf0f1;
+	background-color: none;
 	width: auto;
 	height: 46px;
 	font-size: 20px;
