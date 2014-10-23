@@ -18,12 +18,11 @@ $(document).ready(function () {
              $('#content').append('<div id="ptrn"><img src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic"></img></div>');
              });
 
-             $("#loading").fadeIn('slow').delay( 4000 ).fadeOut('slow');
+             $("#loading").fadeIn('slow').delay( 2000 ).fadeOut('slow');
 
              $(".pic").click(function(){
     			$(this).toggleClass("selected");
 			});
-
           });
     });
 });
