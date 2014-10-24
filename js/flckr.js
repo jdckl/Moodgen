@@ -13,12 +13,9 @@ $(document).ready(function () {
         var tags = "&tags=" + searchTerm;
         var tagmode = "&tagmode=any";
         var jsonFormat = "&format=json&nojsoncallback=1";
-<<<<<<< HEAD
         var limit = "&per_page=250";
         var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
-=======
-        var FinalURL = Flickurl + tags + tagmode + jsonFormat;
->>>>>>> FETCH_HEAD
+		var FinalURL = Flickurl + tags + tagmode + jsonFormat;
         var keepers = [];
 
          $.getJSON(FinalURL, function(photos) {
@@ -89,8 +86,3 @@ $(document).ready(function () {
           });
     });
 });
-<<<<<<< HEAD
-
-
-=======
->>>>>>> FETCH_HEAD
