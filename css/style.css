@@ -18,6 +18,8 @@ button:focus {
     outline: none;
 }
 
+::-webkit-input-placeholder { opacity: 0.4; color: #cdcdcd; }
+
 #header{
 	width: 60%;
 	left: 50%;

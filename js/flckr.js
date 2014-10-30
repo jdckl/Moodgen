@@ -1,6 +1,3 @@
-// Loop
-
-
 $(document).ready(function () {
     $("#btn").click(function (event) {
 
@@ -45,6 +42,8 @@ $(document).ready(function () {
 
                         console.log("all loaded");
                         $("#loading").fadeOut('slow');
+                        $("#sbx").val('');
+                        $("#sbx").attr("placeholder", "Woohoo I'm fast! :D");
                     }
                 });
              });
