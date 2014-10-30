@@ -88,3 +88,10 @@ $(document).ready(function () {
           });
     });
 });
+
+// Submit on enter.
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        $("#btn").click();
+    }
+});
