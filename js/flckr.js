@@ -1,3 +1,6 @@
+// Loop
+
+
 $(document).ready(function () {
     $("#btn").click(function (event) {
 
@@ -29,27 +32,21 @@ $(document).ready(function () {
             });
 
              var doneNumber = 0;
-                                   
-             $.each(photo, function(i, item) {
+
+            $.each(photo, function(i, item) {
              
                  $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
-
                  $('#' + item.id).load(function() {
              
                     doneNumber = doneNumber + 1;
-
                     console.log(doneNumber);
 
                      if (doneNumber == photo.length) {
 
                         console.log("all loaded");
-
                         $("#loading").fadeOut('slow');
-
                     }
-
                 });
-             
              });
 
              $("#loading").fadeIn('slow');
@@ -57,20 +54,16 @@ $(document).ready(function () {
             $(".pic").click(function(){
     	    
                $(this).toggleClass("selected");
-
-               
-            
-               if ( $( ".pic" ).is( ".selected" ) ) {
+  
+               if ( $(this).is( ".selected" ) ) {
             
                     $("#info").fadeIn("fast");
-
-                    keepers.push($(this).attr('src'));
+                     keepers.push($(this).attr('src'));
             
                 } else {
 
                     $("#info").fadeOut("fast");
-
-                    keepers.push($(this).attr('src'));
+                    _.pull(keepers, $(this).attr('src'));
                 
                 }
 
@@ -81,8 +74,17 @@ $(document).ready(function () {
             $("#btn3").click(function(){
                 $(".pic").removeClass("selected");
                 $("#info").fadeOut("fast");
+                while(keepers.length > 0) {
+                keepers.pop();
+                }
+                console.log(keepers);
             });
 
+            $("#btn2").click(function(){
+                $('#content').empty();
+
+            });
+           
           });
     });
 });
