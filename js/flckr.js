@@ -95,19 +95,19 @@ $(document).ready(function () {
             $("#btnmore").click(function(){
 
                 $('#content').empty();
+
                 _.forEach( keepers , function(url) { 
                     console.log(url);
-                    $('#content').append('<img id="' + url + '" class="pic selected" src="'+ url +'" />');
+                    $('#content').append('<img class="pic selected" src="'+ url +'" />');
 
-        var searchTerm = $("#sbx2").val();
-        var Flickurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
-        var tags = "&tags=" + searchTerm;
-        var tagmode = "&tagmode=any";
-        var jsonFormat = "&format=json&nojsoncallback=1";
-        var limit = "&per_page=100";
-        var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
+        var st= $("#sbx2").val();
+        var Flurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
+        var tg = "&tags=" + st;
+        var tm = "&tagmode=any";
+        var jf = "&format=json&nojsoncallback=1";
+        var Furl = Flurl + tg + tm + jf;
 
-        $.getJSON(FinalURL, function(photos) {
+        $.getJSON(Furl, function(photos) {
              var photo = photos.photos.photo;
              console.log(photo);
 
@@ -117,16 +117,16 @@ $(document).ready(function () {
 
             });
 
-             var doneNumber = 0;
+             var doneNumber2 = 0;
 
             $.each(photo, function(i, item) {
              
                  $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
                  $('#' + item.id).load(function() {
              
-                    doneNumber = doneNumber + 1;
+                    doneNumber2 = doneNumber2 + 1;
 
-                     if (doneNumber == photo.length) {
+                     if (doneNumber2 == photo.length) {
 
                         $("#loading").fadeOut('slow');
                         $("#sbx2").val('');
@@ -149,6 +149,11 @@ $("#loading").fadeIn('slow');
 // Submit on enter.
 $(document).keypress(function(e) {
     if(e.which == 13) {
-        $("#btn").click();
+        if($('#info').is(':visible')) {
+    $("#btnmore").click();
+}else{
+    $("#btn").click();
+}
+        
     }
 });

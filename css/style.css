@@ -42,6 +42,13 @@ button:focus {
 	-webkit-transition: top 0.8s ease;
 }
 
+.finalstate{
+	bottom: 5% !important;
+	margin-bottom: 0px !important;
+	-webkit-transition: bottom 0.8s ease;
+
+}
+
 #info{
 	width: 60%;
 	height: 80px;
