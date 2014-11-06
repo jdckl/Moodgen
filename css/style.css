@@ -42,13 +42,6 @@ button:focus {
 	-webkit-transition: top 0.8s ease;
 }
 
-.finalstate{
-	bottom: 5% !important;
-	margin-bottom: 0px !important;
-	-webkit-transition: bottom 0.8s ease;
-
-}
-
 #info{
 	width: 60%;
 	height: 80px;
@@ -56,6 +49,39 @@ button:focus {
 	background-color: #16a085;
 	position: fixed;
 	z-index: 11;
+	display: none;
+}
+
+#ftxt{
+	max-width: 70%;
+	float: left;
+	margin-left: 15px;
+	font-family: Helvetica;
+}
+
+#print{
+	border: none;
+	float: right;
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+  	margin-right: 10px;
+	border-radius: 4px;
+	background-color: #2ecc71;
+	width: 200px;
+	height: 46px;
+	font-size: 20px;
+	color: #2c3e50;
+	cursor: pointer;
+}
+
+#finish{
+	width: 60%;
+	height: 80px;
+	border-radius: 6px;
+	background-color: #e74c3c;
+	position: fixed;
+	z-index: 15;
 	display: none;
 }
 

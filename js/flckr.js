@@ -50,6 +50,8 @@ $(document).ready(function () {
 
              $("#loading").fadeIn('slow');
 
+// DELEGATE ?
+
             $(".pic").click(function(){
     	    
                $(this).toggleClass("selected");
@@ -86,6 +88,8 @@ $(document).ready(function () {
                  _.forEach( keepers , function(url) { 
                     console.log(url);
                     $('#content').append('<img class="pic" src="'+ url +'" />');
+                    $("#finish").fadeIn("fast");
+                    $("#info").fadeOut("fast");
                 });
 
             });
