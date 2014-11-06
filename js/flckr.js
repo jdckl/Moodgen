@@ -13,7 +13,7 @@ $(document).ready(function () {
         var tags = "&tags=" + searchTerm;
         var tagmode = "&tagmode=any";
         var jsonFormat = "&format=json&nojsoncallback=1";
-        var limit = "&per_page=100";
+        var limit = "&per_page=40";
         var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
         var keepers = [];
 
@@ -99,6 +99,7 @@ $(document).ready(function () {
                 _.forEach( keepers , function(url) { 
                     console.log(url);
                     $('#content').append('<img class="pic selected" src="'+ url +'" />');
+                });
 
         var st= $("#sbx2").val();
         var Flurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
@@ -108,8 +109,8 @@ $(document).ready(function () {
         var Furl = Flurl + tg + tm + jf;
 
         $.getJSON(Furl, function(photos) {
-             var photo = photos.photos.photo;
-             console.log(photo);
+             var phototwo = photos.photos.photo;
+             console.log(phototwo);
 
              $('#content').load(function() {
              
@@ -119,7 +120,7 @@ $(document).ready(function () {
 
              var doneNumber2 = 0;
 
-            $.each(photo, function(i, item) {
+            $.each(phototwo, function(i, item) {
              
                  $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
                  $('#' + item.id).load(function() {
@@ -136,10 +137,8 @@ $(document).ready(function () {
                 });
              });
         }); //JSON end
+
 $("#loading").fadeIn('slow');
-
-                });
-
             });
            
           });
