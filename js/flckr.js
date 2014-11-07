@@ -59,9 +59,8 @@ $(document).ready(function () {
 
 // DELEGATE ?
 
-            $(".pic").click(function(){
-    	    
-               $(this).toggleClass("selected");
+$( "body" ).delegate( ".pic", "click", function() {
+  $(this).toggleClass("selected");
   
                if ( $(this).is( ".selected" ) ) {
             
@@ -76,8 +75,7 @@ $(document).ready(function () {
                 }
 
                 console.log(keepers);
-	       
-            });
+});
 
             $("#btn3").click(function(){
                 $(".pic").removeClass("selected");
