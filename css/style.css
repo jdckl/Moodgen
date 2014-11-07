@@ -138,7 +138,7 @@ button:focus {
 	border-radius: 6px;
 	width: 60%;
 	height: 80px;
-	background-color: #34495e;
+	background-color: #344956;
 	position: fixed;
 	z-index: -1;
 }
@@ -244,27 +244,15 @@ button{
 }
 
 #content{
-	max-width: 100%;
+	width: 100%;
 	z-index: 0;
-	-webkit-column-count: 4;
-    -webkit-column-gap: 10px;
-    -webkit-column-fill: auto;
-    -moz-column-count: 4;
-    -moz-column-gap: 10px;
-    column-count: 4;
-    column-gap: 10px;
-    column-fill: auto;
+
 
 }
 
 #content img{
-	width: 100%;
-	margin-bottom: 5px;
+	width: 25%;
 	z-index: 1;
-	-webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-    -ms-column-break-inside: avoid;
-    column-break-inside: avoid;
 }
 
 .selected{

@@ -8,12 +8,14 @@ $(document).ready(function () {
 
     	$('#content').empty();
 
+        var $container = $('#content');
+
         var searchTerm = $("#sbx").val();
         var Flickurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
         var tags = "&tags=" + searchTerm;
         var tagmode = "&tagmode=any";
         var jsonFormat = "&format=json&nojsoncallback=1";
-        var limit = "&per_page=40";
+        var limit = "&per_page=100";
         var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
         var keepers = [];
 
@@ -39,12 +41,17 @@ $(document).ready(function () {
 
                      if (doneNumber == photo.length) {
 
+                        var value = $("#sbx").val();
                         console.log("all loaded");
                         $("#loading").fadeOut('slow');
+                        $("#sbx").attr("placeholder", "You searched for " +  value + "!");
                         $("#sbx").val('');
-                        $("#sbx").attr("placeholder", "Woohoo I'm fast! :D");
-
-                        }
+                        $container.isotope({
+                            itemSelector: '.pic',
+                            layoutMode: 'masonry',
+                            containerStyle: null
+                        });
+                        }                        
                 });
              });
 
@@ -90,6 +97,7 @@ $(document).ready(function () {
                     $('#content').append('<img class="pic" src="'+ url +'" />');
                     $("#finish").fadeIn("fast");
                     $("#info").fadeOut("fast");
+                    $container.isotope('layout');
                 });
 
             });
@@ -134,9 +142,11 @@ $(document).ready(function () {
                      if (doneNumber2 == photo.length) {
 
                         $("#loading").fadeOut('slow');
+                        var valuetw = $("#sbx2").val();
+                        $("#sbx2").attr("placeholder", "Saved and searched for " +  valuetw + "!");
                         $("#sbx2").val('');
-                        $("#sbx2").attr("placeholder", "Yay! :D");
-
+                        $container.isotope('layout');
+                        
                         }
                 });
              });
