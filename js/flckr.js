@@ -46,18 +46,14 @@ $(document).ready(function () {
                         $("#loading").fadeOut('slow');
                         $("#sbx").attr("placeholder", "You searched for " +  value + "!");
                         $("#sbx").val('');
-                        $container.isotope({
-                            itemSelector: '.pic',
-                            layoutMode: 'masonry',
-                            containerStyle: null
-                        });
+                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
                         }                        
                 });
              });
-
+                
              $("#loading").fadeIn('slow');
 
-// DELEGATE ?
+// DELEGATE the click selection
 
 $( "body" ).delegate( ".pic", "click", function() {
   $(this).toggleClass("selected");
@@ -95,7 +91,7 @@ $( "body" ).delegate( ".pic", "click", function() {
                     $('#content').append('<img class="pic" src="'+ url +'" />');
                     $("#finish").fadeIn("fast");
                     $("#info").fadeOut("fast");
-                    $container.isotope('layout');
+                    $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
                 });
 
             });
@@ -143,14 +139,14 @@ $( "body" ).delegate( ".pic", "click", function() {
                         var valuetw = $("#sbx2").val();
                         $("#sbx2").attr("placeholder", "Saved and searched for " +  valuetw + "!");
                         $("#sbx2").val('');
-                        $container.isotope('layout');
-                        
+                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );          
                         }
                 });
              });
         }); //JSON end
 
 $("#loading").fadeIn('slow');
+
             });
            
           });

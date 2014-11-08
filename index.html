@@ -11,15 +11,6 @@
 <script src="js/flckr.js"></script>
 <script src="http://isotope.metafizzy.co/isotope.pkgd.min.js"></script>
 
-<script>
-var $container = $('#content');
-	$container.isotope({
-                            itemSelector: '.pic',
-                            layoutMode: 'masonry',
-                            containerStyle: null
-                        });
-</script>
-
 </head>
 <body>
 
@@ -42,7 +33,7 @@ Mood<i>[tag]</i>
 <div id="loading">
 <div class="loader">Loading..</div>
 </div>
-<div id="content">
+<div id="content" class="js-isotope" data-isotope-options='{ "columnWidth": 250, "itemSelector": "img", "layoutMode": "masonry" }'>
 
 </div>
 </body>
