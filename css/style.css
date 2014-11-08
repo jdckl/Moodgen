@@ -1,3 +1,27 @@
+@media print{
+@page /* Print headers hack for chrome, firefox included in html tag */
+        {
+            size: auto;
+            margin: 0mm;
+        }
+
+	.pic[style]
+{
+	position:relative !important;
+display:block !important;
+left:0 !important;
+top:auto !important;
+float:left !important;
+}
+
+#container[style]
+{
+height:auto !important;
+}
+#header{display: none;}
+
+}
+
 body{
 	background-color: #ecf0f1;
 	padding: 0;

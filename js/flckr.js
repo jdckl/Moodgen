@@ -96,6 +96,12 @@ $( "body" ).delegate( ".pic", "click", function() {
 
             });
 
+            $("#print").click(function(){
+
+                    window.print();
+
+                });
+
 
             //Search more tags process!**************
             $("#btnmore").click(function(){
