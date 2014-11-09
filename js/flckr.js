@@ -98,7 +98,14 @@ $( "body" ).delegate( ".pic", "click", function() {
 
             $("#print").click(function(){
 
-                    window.print();
+html2canvas($('#content'), {
+  "logging": true,
+  "proxy":"proxy.php",
+   onrendered: function(canvas) {
+     var img = canvas.toDataURL()
+     window.open(img);
+  }
+});
 
                 });
 
