@@ -100,9 +100,9 @@ $( "body" ).delegate( ".pic", "click", function() {
 
 html2canvas($('#content'), {
   "logging": true,
-  "proxy":"proxy.php",
+  "proxy":"http://localhost/Moodgen/proxy.php",
    onrendered: function(canvas) {
-     var img = canvas.toDataURL()
+     var img = canvas.toDataURL("image/png")
      window.open(img);
   }
 });
