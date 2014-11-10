@@ -1,7 +1,8 @@
 @media print{
 @page /* Print headers hack for chrome, firefox included in html tag */
         {
-            size: auto !important;
+            size: A3 !important;
+            size: landscape !important;
             margin: 0mm !important;
             background-color: white !important;
         }
@@ -15,10 +16,9 @@
 {
 display: flex !important;
 flex-direction: row !important;
-align-content: flex-start !important;
 }
 #header{display: none;}
-body{background-color: white !important;}
+body{background-color: white !important; writing-mode: tb-rl !important;}
 
 }
 
