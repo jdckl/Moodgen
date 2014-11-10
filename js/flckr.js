@@ -1,12 +1,12 @@
-$(document).ready(function () {
-    $("#btn").click(function (event) {
+$(document).ready(function() {
 
-        if ( $( "#header" ).is( ".focused" ) ) { 
-                } else {
-        $("#header").addClass("focused");                
-                }
+    $("#btn").click(function(event) {
 
-    	$('#content').empty();
+        if ($("#header").is(".focused")) {} else {
+            $("#header").addClass("focused");
+        }
+
+        $('#content').empty();
 
         var $container = $('#content');
 
@@ -19,161 +19,182 @@ $(document).ready(function () {
         var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
         var keepers = [];
 
-         $.getJSON(FinalURL, function(photos) {
-             var photo = photos.photos.photo;
-             console.log(photo);
+        $.getJSON(FinalURL, function(photos) {
+            var photo = photos.photos.photo;
 
-             $('#content').load(function() {
-             
-                console.log("load");
+            $('#content').load(function() {
+
 
             });
 
-             var doneNumber = 0;
+            var doneNumber = 0;
 
             $.each(photo, function(i, item) {
-             
-                 $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
-                 $('#' + item.id).load(function() {
-             
+
+                var img = new Image();
+
+                img.src = "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" + item.id + "_" + item.secret + ".jpg";
+
+                img.onload = function() {
+
+                    var canvas = document.createElement("canvas");
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(this, 0, 0);
+
+                    var dataURL = canvas.toDataURL("image/png");
+
+                    $('#content').append('<img id="' + item.id + '" src="data:image/png;base64,' + dataURL.replace(/^data:image\/(png|jpg);base64,/, "") + '" class="pic" />');
+
+                }
+
+
+                $('#' + item.id).load(function() {
+
                     doneNumber = doneNumber + 1;
                     console.log(doneNumber);
 
-                     if (doneNumber == photo.length) {
+                    if (doneNumber == photo.length) {
 
                         var value = $("#sbx").val();
                         console.log("all loaded");
                         $("#loading").fadeOut('slow');
-                        $("#sbx").attr("placeholder", "You searched for " +  value + "!");
+                        $("#sbx").attr("placeholder", "You searched for " + value + "!");
                         $("#sbx").val('');
-                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
-                        }                        
+                        $('#content').isotope('reloadItems').isotope({
+                            sortBy: 'original-order'
+                        });
+                    }
                 });
-             });
-                
-             $("#loading").fadeIn('slow');
+            });
 
-// DELEGATE the click selection
+            $("#loading").fadeIn('slow');
 
-$( "body" ).delegate( ".pic", "click", function() {
-  $(this).toggleClass("selected");
-  
-               if ( $(this).is( ".selected" ) ) {
-            
+            // DELEGATE the click selection
+
+            $("body").delegate(".pic", "click", function() {
+                $(this).toggleClass("selected");
+
+                if ($(this).is(".selected")) {
+
                     $("#info").fadeIn("fast");
-                     keepers.push($(this).attr('src'));
-            
+                    keepers.push($(this).attr('src'));
+
                 } else {
 
                     $("#info").fadeOut("fast");
                     _.pull(keepers, $(this).attr('src'));
-                
+
                 }
 
                 console.log(keepers);
-});
+            });
 
-            $("#btn3").click(function(){
+            $("#btn3").click(function() {
                 $(".pic").removeClass("selected");
                 $("#info").fadeOut("fast");
-                while(keepers.length > 0) {
-                keepers.pop();
+                while (keepers.length > 0) {
+                    keepers.pop();
                 }
                 console.log(keepers);
             });
 
 
             // The DONE process! ****************
-            $("#btn2").click(function(){
+            $("#btn2").click(function() {
                 $('#content').empty();
-                 _.forEach( keepers , function(url) { 
+                _.forEach(keepers, function(url) {
                     console.log(url);
-                    $('#content').append('<img class="pic" src="'+ url +'" />');
+                    $('#content').append('<img class="pic" src="' + url + '" />');
                     $("#finish").fadeIn("fast");
                     $("#info").fadeOut("fast");
-                    $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                    $('#content').isotope('reloadItems').isotope({
+                        sortBy: 'original-order'
+                    });
                 });
 
             });
 
-            $("#print").click(function(){
+            $("#print").click(function() {
 
-html2canvas($('#content'), {
-  "logging": true,
-  "proxy":"http://localhost/Moodgen/proxy.php",
-   onrendered: function(canvas) {
-     var img = canvas.toDataURL("image/png")
-     window.open(img);
-  }
-});
-
+                html2canvas($('#content'), {
+                    "logging": true,
+                    onrendered: function(canvas) {
+                        var img = canvas.toDataURL("image/png")
+                        window.open(img);
+                    }
                 });
+
+            });
 
 
             //Search more tags process!**************
-            $("#btnmore").click(function(){
+            $("#btnmore").click(function() {
 
                 $('#content').empty();
 
-                _.forEach( keepers , function(url) { 
+                _.forEach(keepers, function(url) {
                     console.log(url);
-                    $('#content').append('<img class="pic selected" src="'+ url +'" />');
+                    $('#content').append('<img class="pic selected" src="' + url + '" />');
                 });
 
-        var st= $("#sbx2").val();
-        var Flurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
-        var tg = "&tags=" + st;
-        var tm = "&tagmode=any";
-        var jf = "&format=json&nojsoncallback=1";
-        var Furl = Flurl + tg + tm + jf;
+                var st = $("#sbx2").val();
+                var Flurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
+                var tg = "&tags=" + st;
+                var tm = "&tagmode=any";
+                var jf = "&format=json&nojsoncallback=1";
+                var Furl = Flurl + tg + tm + jf;
 
-        $.getJSON(Furl, function(photos) {
-             var phototwo = photos.photos.photo;
-             console.log(phototwo);
+                $.getJSON(Furl, function(photos) {
+                    var phototwo = photos.photos.photo;
 
-             $('#content').load(function() {
-             
-                console.log("load");
+                    $('#content').load(function() {
+
+                        console.log("load");
+
+                    });
+
+                    var doneNumber2 = 0;
+
+                    $.each(phototwo, function(i, item) {
+
+                        $('#content').append('<img id="' + item.id + '" src="data:image/png;base64,' + getBase64FromImageUrl("https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" + item.id + "_" + item.secret + ".jpg") + '" class="pic" />');
+                        $('#' + item.id).load(function() {
+
+                            doneNumber2 = doneNumber2 + 1;
+
+                            if (doneNumber2 == photo.length) {
+
+                                $("#loading").fadeOut('slow');
+                                var valuetw = $("#sbx2").val();
+                                $("#sbx2").attr("placeholder", "Saved and searched for " + valuetw + "!");
+                                $("#sbx2").val('');
+                                $('#content').isotope('reloadItems').isotope({
+                                    sortBy: 'original-order'
+                                });
+                            }
+                        });
+                    });
+                }); //JSON end
+
+                $("#loading").fadeIn('slow');
 
             });
 
-             var doneNumber2 = 0;
-
-            $.each(phototwo, function(i, item) {
-             
-                 $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
-                 $('#' + item.id).load(function() {
-             
-                    doneNumber2 = doneNumber2 + 1;
-
-                     if (doneNumber2 == photo.length) {
-
-                        $("#loading").fadeOut('slow');
-                        var valuetw = $("#sbx2").val();
-                        $("#sbx2").attr("placeholder", "Saved and searched for " +  valuetw + "!");
-                        $("#sbx2").val('');
-                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );          
-                        }
-                });
-             });
-        }); //JSON end
-
-$("#loading").fadeIn('slow');
-
-            });
-           
-          });
+        });
     });
 });
 
 // Submit on enter.
 $(document).keypress(function(e) {
-    if(e.which == 13) {
-        if($('#info').is(':visible')) {
-    $("#btnmore").click();
-}else{
-    $("#btn").click();
-}
-        
+    if (e.which == 13) {
+        if ($('#info').is(':visible')) {
+            $("#btnmore").click();
+        } else {
+            $("#btn").click();
+        }
+
     }
 });
