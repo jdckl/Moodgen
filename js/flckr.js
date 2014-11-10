@@ -16,6 +16,8 @@ $(document).ready(function () {
         var tagmode = "&tagmode=any";
         var jsonFormat = "&format=json&nojsoncallback=1";
         var limit = "&per_page=100";
+        var page = "&page=" + number + ""
+        var number = 1;
         var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
         var keepers = [];
 
@@ -53,21 +55,58 @@ $(document).ready(function () {
                 
              $("#loading").fadeIn('slow');
 
+$(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+       number = number + 1;
+       doneNumber = 0;
+       
+       $.getJSON(FinalURL, function(photos) {
+             var photo = photos.photos.photo;
+             console.log(photo);
+
+             $('#content').load(function() {
+              console.log("load");
+             });
+
+            $.each(photo, function(i, item) {
+             
+                 $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                 
+                 $('#' + item.id).load(function() {
+             
+                    doneNumber = doneNumber + 1;
+                    console.log(doneNumber);
+
+                     if (doneNumber == photo.length) {
+
+                        console.log("all loaded");
+                        $("#loading").fadeOut('slow');
+                        $("#sbx").attr("placeholder", "You searched for " +  value + "!");
+                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                        }                        
+                  });
+             });
+            });
+
+  } 
+});
+
+
 // DELEGATE the click selection
 
 $( "body" ).delegate( ".pic", "click", function() {
   $(this).toggleClass("selected");
   
                if ( $(this).is( ".selected" ) ) {
-            
-                    $("#info").fadeIn("fast");
                      keepers.push($(this).attr('src'));
             
                 } else {
-
-                    $("#info").fadeOut("fast");
                     _.pull(keepers, $(this).attr('src'));
-                
+                }
+                if ( $(".pic").is( ".selected" ) ) {
+                     $("#info").fadeIn("fast");            
+                } else {
+                    $("#info").fadeOut("fast");
                 }
 
                 console.log(keepers);
@@ -118,6 +157,7 @@ $( "body" ).delegate( ".pic", "click", function() {
         var tg = "&tags=" + st;
         var tm = "&tagmode=any";
         var jf = "&format=json&nojsoncallback=1";
+        var lm = "&per_page=50";
         var Furl = Flurl + tg + tm + jf;
 
         $.getJSON(Furl, function(photos) {
@@ -130,16 +170,16 @@ $( "body" ).delegate( ".pic", "click", function() {
 
             });
 
-             var doneNumber2 = 0;
+             var doneNumbertw = 0;
 
             $.each(phototwo, function(i, item) {
              
                  $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
                  $('#' + item.id).load(function() {
              
-                    doneNumber2 = doneNumber2 + 1;
+                    doneNumbertw = doneNumbertw + 1;
 
-                     if (doneNumber2 == photo.length) {
+                     if (doneNumbertw == photo.length) {
 
                         $("#loading").fadeOut('slow');
                         var valuetw = $("#sbx2").val();
