@@ -44,6 +44,19 @@ button:focus {
 
 ::-webkit-input-placeholder { opacity: 0.4; color: #cdcdcd; }
 
+#settings{
+	position: relative;
+	display: inline-block;
+}
+
+#settings ul{
+	list-style-type: none;
+}
+
+#settings input[radio]{
+	display: inline;
+}
+
 #header{
 	width: 60%;
 	left: 50%;
