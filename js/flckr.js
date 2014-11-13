@@ -7,14 +7,18 @@ $(document).ready(function () {
                 }
 
     	$('#content').empty();
+            $("#notif").slideUp();
 
+        var $container = $('#content');
+        var number = 1;
         var searchTerm = $("#sbx").val();
         var Flickurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
         var tags = "&tags=" + searchTerm;
         var tagmode = "&tagmode=any";
         var jsonFormat = "&format=json&nojsoncallback=1";
-        var limit = "&per_page=40";
-        var FinalURL = Flickurl + tags + tagmode + limit + jsonFormat;
+        var limit = "&per_page=100";
+        var page = "&page=" + number + "";
+        var FinalURL = Flickurl + tags + tagmode + page + jsonFormat;
         var keepers = [];
 
          $.getJSON(FinalURL, function(photos) {
@@ -39,38 +43,107 @@ $(document).ready(function () {
 
                      if (doneNumber == photo.length) {
 
+                        var value = $("#sbx").val();
                         console.log("all loaded");
                         $("#loading").fadeOut('slow');
-                        $("#sbx").val('');
-                        $("#sbx").attr("placeholder", "Woohoo I'm fast! :D");
-
-                        }
+                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                        $("#notif").slideDown();
+                        $("#notif span").text("Done loading! Try selecting the images you like by clicking on them! (hint: if you scroll way down, I'll load more, but shhh..)");
+                        
+                        }                        
                 });
              });
-
+                
              $("#loading").fadeIn('slow');
 
-// DELEGATE ?
+// INFINITE SCROLLING :3 (fix the if)
+var ready = true;
+        
+  $(window).scroll(function() {
+    if(ready == true) {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
+    if ( $( "#finish" ).is( ":visible" ) ) { } else {
 
-            $(".pic").click(function(){
-    	    
-               $(this).toggleClass("selected");
-  
-               if ( $(this).is( ".selected" ) ) {
-            
-                    $("#info").fadeIn("fast");
-                     keepers.push($(this).attr('src'));
-            
-                } else {
 
-                    $("#info").fadeOut("fast");
-                    _.pull(keepers, $(this).attr('src'));
+       number = number + 1;
+       console.log("scrollnumber:" + number)
+       
+        ready = false;
+        console.log(ready)
+        var dsearchTerm = $("#sbx").val();
+        var dFlickurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
+        var dtags = "&tags=" + dsearchTerm;
+        var dtagmode = "&tagmode=any";
+        var djsonFormat = "&format=json&nojsoncallback=1";
+        var dlimit = "&per_page=100";
+        var dpage = "&page=" + number + "";
+        var scrollURL = dFlickurl + dtags + dtagmode + dpage + djsonFormat;
+
+
+       $.getJSON(scrollURL, function(photos) {
+             var photoscroll = photos.photos.photo;
+             console.log(photoscroll);
+
+             var dnb = 0;
+            $.each(photoscroll, function(i, item) {
+             
+                 $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
+                 $('#' + item.id).load(function() {
                 
+                    dnb = dnb + 1;
+                    console.log(dnb);
+                     if (dnb == photoscroll.length) {
+
+                        $("#loading").fadeOut('slow');
+                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                            ready = true;
+                            console.log(ready)
+                        }                        
+                });
+
+
+                });
+            });
+    $("#loading").fadeIn('slow');
+}
+}
+}
+});
+
+
+$(".pic").one("click", function(){
+
+$("#notif").slideDown();
+$("#notif span").text("Awesome picture! You can keep on selecting more, or search for some different tag, if you're done selecting this one!");
+setTimeout(
+  function() 
+  {
+    $("#notif").slideUp();
+  }, 7000);
+
+});
+
+// DELEGATE the click selection
+
+$( "body" ).delegate( ".pic", "click", function() {
+      if ( $("#finish").is(":visible")){} else {
+  $(this).toggleClass("selected");
+
+               if ( $(this).is( ".selected" ) ) {
+                     keepers.push($(this).attr('src'));
+                                 
+                } else {
+                    _.pull(keepers, $(this).attr('src'));
+                }
+                if ( $(".pic").is( ".selected" ) ) {
+                     $("#info").fadeIn("fast");      
+                } else {
+                    $("#info").fadeOut("fast");
                 }
 
                 console.log(keepers);
-	       
-            });
+            }
+});
 
             $("#btn3").click(function(){
                 $(".pic").removeClass("selected");
@@ -90,9 +163,24 @@ $(document).ready(function () {
                     $('#content').append('<img class="pic" src="'+ url +'" />');
                     $("#finish").fadeIn("fast");
                     $("#info").fadeOut("fast");
+                    $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                    $("#notif").slideUp();
+                    
                 });
-
+                 $("#notif").slideDown();
+                        $("#notif span").text("It's the fiiiiiinaaal.. print .. ooout. Yeah.");
+                        setTimeout(
+  function() 
+  {
+    $("#notif").slideUp();
+  }, 6000);
             });
+
+            $("#print").click(function(){
+
+                window.print();
+
+                });
 
 
             //Search more tags process!**************
@@ -105,12 +193,15 @@ $(document).ready(function () {
                     $('#content').append('<img class="pic selected" src="'+ url +'" />');
                 });
 
+                number = 1;
         var st= $("#sbx2").val();
         var Flurl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=376b144109ffe90065a254606c9aae3d&";
         var tg = "&tags=" + st;
         var tm = "&tagmode=any";
         var jf = "&format=json&nojsoncallback=1";
-        var Furl = Flurl + tg + tm + jf;
+        var lm = "&per_page=100";
+        var pg = "&page=" + number + "";
+        var Furl = Flurl + tg + tm + jf + pg;
 
         $.getJSON(Furl, function(photos) {
              var phototwo = photos.photos.photo;
@@ -122,27 +213,33 @@ $(document).ready(function () {
 
             });
 
-             var doneNumber2 = 0;
+             var doneNumbertw = 0;
 
             $.each(phototwo, function(i, item) {
              
                  $('#content').append('<img id="' + item.id + '" src="' + "https://farm" + item.farm + ".staticflickr.com/" + item.server + "/" +item.id + "_" + item.secret + ".jpg"+ '" class="pic" />');
                  $('#' + item.id).load(function() {
              
-                    doneNumber2 = doneNumber2 + 1;
+                    doneNumbertw = doneNumbertw + 1;
 
-                     if (doneNumber2 == photo.length) {
+                     if (doneNumbertw == phototwo.length) {
 
                         $("#loading").fadeOut('slow');
+                        var valuetw = $("#sbx2").val();
+                        $("#sbx2").attr("placeholder", "Saved and searched for " +  valuetw + "!");
                         $("#sbx2").val('');
-                        $("#sbx2").attr("placeholder", "Yay! :D");
-
+                        $("#sbx").val("" +  valuetw + "");
+                        $('#content').isotope( 'reloadItems' ).isotope( { sortBy: 'original-order' } );
+                        $("#notif").slideUp();
+                         $("#notif").slideDown();
+                          $("#notif span").text("I saved your images and loaded the new ones based on your tag.. am I awesome?");        
                         }
                 });
              });
         }); //JSON end
 
 $("#loading").fadeIn('slow');
+
             });
            
           });
@@ -159,4 +256,16 @@ $(document).keypress(function(e) {
 }
         
     }
+});
+
+$(document).ready(function () {
+$("#notif").slideDown();
+setTimeout(
+  function() 
+  {
+    $("#notif").slideUp();
+  }, 8000);
+    $("#notif").click(function (event) {
+        $("#notif").slideUp();
+        });
 });

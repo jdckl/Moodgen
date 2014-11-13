@@ -1,3 +1,27 @@
+@media print{
+@page /* Print headers hack for chrome, firefox included in html tag */
+        {
+            size: A3 !important;
+            size: landscape !important;
+            margin: 0mm !important;
+            background-color: white !important;
+        }
+
+	.pic[style]
+{
+	flex: 1;
+}
+
+#container[style]
+{
+display: flex !important;
+flex-direction: row !important;
+}
+#header{display: none;}
+body{background-color: white !important; writing-mode: tb-rl !important;}
+
+}
+
 body{
 	background-color: #ecf0f1;
 	padding: 0;
@@ -19,6 +43,19 @@ button:focus {
 }
 
 ::-webkit-input-placeholder { opacity: 0.4; color: #cdcdcd; }
+
+#settings{
+	position: relative;
+	display: inline-block;
+}
+
+#settings ul{
+	list-style-type: none;
+}
+
+#settings input[radio]{
+	display: inline;
+}
 
 #header{
 	width: 60%;
@@ -56,8 +93,34 @@ button:focus {
 	max-width: 70%;
 	float: left;
 	margin-left: 15px;
+	margin-top: ;
 	font-family: Helvetica;
 }
+
+#notif{
+	width: 70%;
+	left: 50%;
+	margin-left: -35%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	position: fixed;
+	background-color: rgba(4, 41, 68, 0.7);;
+	height: 35px;
+	vertical-align: middle;
+	text-align: center;
+	bottom: 0;
+	z-index: 9999;
+	font-family: Helvetica;
+	display: none;
+	color: white;
+}
+
+#notif span{
+	display: inline-block;
+	vertical-align: middle;
+	height: 1px;
+}
+
 
 #print{
 	border: none;
@@ -84,6 +147,7 @@ button:focus {
 	z-index: 15;
 	display: none;
 }
+
 
 #info h1{
 	margin: 0;
@@ -138,7 +202,7 @@ button:focus {
 	border-radius: 6px;
 	width: 60%;
 	height: 80px;
-	background-color: #34495e;
+	background-color: #344956;
 	position: fixed;
 	z-index: -1;
 }
@@ -244,27 +308,15 @@ button{
 }
 
 #content{
-	max-width: 100%;
+	width: 100%;
 	z-index: 0;
-	-webkit-column-count: 4;
-    -webkit-column-gap: 10px;
-    -webkit-column-fill: auto;
-    -moz-column-count: 4;
-    -moz-column-gap: 10px;
-    column-count: 4;
-    column-gap: 10px;
-    column-fill: auto;
+
 
 }
 
 #content img{
-	width: 100%;
-	margin-bottom: 5px;
+	width: 25%;
 	z-index: 1;
-	-webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-    -ms-column-break-inside: avoid;
-    column-break-inside: avoid;
 }
 
 .selected{
